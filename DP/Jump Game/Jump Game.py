@@ -1,5 +1,6 @@
 def canJump(nums)->bool:
     goal=len(nums)-1
+    #backtracking
     for i in range(len(nums)-2,-1,-1):
         if (nums[i]+i)>=goal:
             goal=i

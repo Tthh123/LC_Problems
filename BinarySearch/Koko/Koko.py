@@ -1,25 +1,22 @@
 from typing import List
-from math import ceil
-
 
 def minEatingSpeed(piles: List[int], h: int) -> int:
-    if (h == len(piles)):
-        return max(piles)
-    l = 1
-    r = max(piles)
-    while (l <= r):
-        totaltime = 0
-        k = (l + r) // 2
-        for i in piles:
-            if (k >= i):
-                totaltime = totaltime + 1
-            else:
-                totaltime = totaltime + ceil(i / k)
-        if (totaltime <= h):
-            r = k - 1
+    def feasible(speed) -> bool:
+        # return sum(math.ceil(pile / speed) for pile in piles) <= H  # slower
+        sum=0
+        for pile in piles:
+            sum=sum+((pile)/speed)+1
+        return sum<=h
+        #return sum((pile - 1) / speed + 1 for pile in piles) <= h  # faster
+
+    left, right = 1, max(piles)
+    while left < right:
+        mid = left + (right - left) // 2
+        if feasible(mid):
+            right = mid
         else:
-            l = k + 1
-    return k
+            left = mid + 1
+    return left
 
 
 print(minEatingSpeed([30,11,23,4,20],6))
