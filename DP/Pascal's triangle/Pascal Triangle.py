@@ -1,3 +1,4 @@
+from typing import List
 def generate(self, numRows: int) -> List[List[int]]:
     dp = [[0] * (i + 1) for i in range(numRows)]
     dp[0][0] = 1
